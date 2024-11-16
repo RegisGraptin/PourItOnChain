@@ -16,6 +16,9 @@ export default function Header () {
                     <li className="flex items-center p-1 text-sm gap-x-2 text-slate-600">
                         <a href="/contest" className="flex items-center">Contest</a>
                     </li>
+                    <li className="flex items-center p-1 text-sm gap-x-2 text-slate-600">
+                        <a href="/claim" className="flex items-center">Claim</a>
+                    </li>
                 </ul>
                 </div>
                 <ConnectButton />
