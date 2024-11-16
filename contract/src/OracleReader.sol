@@ -1,5 +1,5 @@
 
-import { ISelfKisser, IChronicle } from "./interface/OracleReader.sol";
+import { ISelfKisser, IChronicle } from "./interface/ChronicleOracleInterface.sol";
 
 abstract contract OracleReader {
 

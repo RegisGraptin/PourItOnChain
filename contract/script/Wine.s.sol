@@ -13,7 +13,7 @@ contract WineScript is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        address account = vm.addr(deployerPrivateKey);
+        // address account = vm.addr(deployerPrivateKey);
 
         // Notice: on scroll pyth entropy does not exists
         address pythEntropyAddress = 0x6CC14824Ea2918f5De5C2f75A9Da968ad4BD6344;

@@ -5,7 +5,6 @@ import { IEntropyConsumer } from "@pythnetwork/entropy-sdk-solidity/IEntropyCons
 import { IEntropy } from "@pythnetwork/entropy-sdk-solidity/IEntropy.sol";
 
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import { ISelfKisser, IChronicle } from "./interface/OracleReader.sol";
 
 import { OracleReader } from "./OracleReader.sol";
 
@@ -13,9 +12,6 @@ contract Wine is ERC721, IEntropyConsumer, OracleReader {
     
     // Entropy from Pyth
     IEntropy public entropy;
-
-    // // Self Kisser from Chronicle Oracle
-    // ISelfKisser public selfKisser;
 
     uint256 public nextTokenId;
 
@@ -46,13 +42,6 @@ contract Wine is ERC721, IEntropyConsumer, OracleReader {
         address chronicleOracleAddress_ETH_USD
     ) ERC721("WineBottle", "WBTL") OracleReader(selfKisserAddress, chronicleOracleAddress_ETH_USD) {
         entropy = IEntropy(entropyAddress);
-
-        // // Chronicle Oracle
-        // selfKisser = ISelfKisser(selfKisserAddress);
-        // chronicle = IChronicle(address(chronicleOracleAddress_ETH_USD));
-
-        // // Whitelist the token address
-        // selfKisser.selfKiss(address(chronicle));
     }
 
     function getEntropy() internal view override returns (address) {
@@ -84,7 +73,6 @@ contract Wine is ERC721, IEntropyConsumer, OracleReader {
     }
 
 
-
     function buyBottle(uint256 tokenId) payable public {
         require(forSell[tokenId], "NOT_FOR_SELL"); // Bottle is for sell
 
@@ -97,9 +85,12 @@ contract Wine is ERC721, IEntropyConsumer, OracleReader {
         }
 
         // Get the price of the bottle
+        uint256 ethPrice = readUSDPriceFromETH();
+        uint256 amountUSD = (msg.value * ethPrice) / 10 ** 18; // Price is 10**18
+        uint256 amountUSDToken = amountUSD / 10 ** 18; // Divide again for the wei conversion
         
-
-        
+        // Check the USD price matching
+        require(amountUSDToken > bottleData[tokenId].priceUSD, "Not enough wei from usdc conversion");
 
         // FIXME: check the amount of eth based on chronicle oracle
         (bool sent, bytes memory _data) = address(this).call{value: msg.value}("");
