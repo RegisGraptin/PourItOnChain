@@ -7,7 +7,7 @@ forge script \
   script/Wine.s.sol:WineScript \
   --verify \
   --verifier blockscout \
-  --verifier-url https://base.blockscout.com/api/ \
+  --verifier-url https://base-sepolia.blockscout.com/api/ \
   --broadcast
 
   

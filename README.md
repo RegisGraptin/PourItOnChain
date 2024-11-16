@@ -1,90 +1,20 @@
-# wine-marketplace
+# PourItOnChain
 
-code deploy: 0xaE5Dd577835069e6686963C4d36acb7CFe87De04
-scroll sepolia
+Currently, in the blockchain all the transactions are public, meaning that all user behaviour are also public. However, no one is currently using this data to retain customer by providing incentive.
+For marketplace, one potential incentive for the user would be to offer him a free gift after some transactions. In the case of our wine marketplace, we can offer him a free bottle after 12 bought. 
+Or, as currently, wine markeplace already exists, I could decide to launch an aggressive acquisition campaign, by promoting and reward users from competitor. In that case, if one person buying a bottle from me, as he is currently buying from my competitor, I can offer him a free bottle to incentive him to come buy from me instead of my competitor.
+Finally, we though about organize contest on-chain by leveraging randomness and keep retain the customer from our marketplace as we want him to create a trustworthy relationship with him on the long run.
 
+## Contract deployed
 
-contract 0x535aFA095b8F208c9834765Fc050c30B558DE333.
-sepolia network
-
-
-auto blockscout deployed at: https://scroll.cloud.blockscout.com/
-
-
-
-
-Note blockscout 
-On the endpoint needed to do: '?module=contract&action=verify'
-
- "https://scroll-sepolia.blockscout.com/api?module=contract&action=verify"
+Last contract deployed:
+On Base: 0x940fb3325A8529C015AA55E6ca2022149f900AcE
+Verified contract on Blockscout: https://base-sepolia.blockscout.com/address/0x940fb3325A8529C015AA55E6ca2022149f900AcE
 
 
-Note that the url in forge is not the same verified
-Input url should be: https://scroll-sepolia.blockscout.com
+## Additional notes 
 
-https://scroll-sepolia.blockscout.com/address/0xf7d25eb89fC8D1530c4304CCbF57922419f0BCF9
-
-
-
-Issue for rollup scroll
-
-
-
-Note pyth:
-
-Why the 
- function getEntropy() internal view override returns (address) {
-    return address(entropy);
-  }
-
-  is mandatory, what values does it brings ? 
-
-
-
-Doc inconsistency
-
-> https://docs.pyth.network/entropy/generate-random-numbers/evm
-
-function requestRandomNumber(bytes32 userRandomNumber) external payable {
-  uint256 fee = entropy.getFee(entropyProvider);
- 
-  uint64 sequenceNumber = entropy.requestWithCallback{ value: fee }(
-    entropyProvider,
-    userRandomNumber
-  );
-}
- 
-
-> But then 
-
- function requestRandomNumber(bytes32 userRandomNumber) external payable {
-    // Get the default provider and the fee for the request
-    address entropyProvider = entropy.getDefaultProvider();
-    uint256 fee = entropy.getFee(entropyProvider);
- 
-
-
- see `address entropyProvider = entropy.getDefaultProvider();`
-that just appear
-
-
-
-------------
-Note for chronicle 
-
-confusing example ??
-
-   function tokenAmount(uint256 amountWei) public view returns (uint256) {
-        // Send amountETH, how many USD I have
-        uint256 ethUsd = _read(); // Price feed has 10**18 decimal places
-        uint256 amountUSD = (amountWei * ethUsd) / 10 ** 18; // Price is 10**18
-        uint256 amountToken = amountUSD / 10 ** 18; // Divide to convert from wei to ETH
-        return amountToken;
-    }
-
-
-amountToken => should be amount in usdc in the end
-
+Prevous contract on Sepolia network: 0x535aFA095b8F208c9834765Fc050c30B558DE333.
 
 
 ## Brevis
