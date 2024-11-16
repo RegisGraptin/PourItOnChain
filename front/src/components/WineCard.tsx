@@ -1,5 +1,7 @@
 import crypto from "crypto";
 
+import Image from "next/image";
+
 import { Address, formatEther, parseEther } from "viem"
 import { useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 
@@ -83,8 +85,14 @@ export default function WineCard({bottleId, bottleDetail}) {
 
   return (
     <div className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96 ml-2 mr-2 mb-4">
-      <div className="relative h-56 m-2.5 overflow-hidden text-white rounded-md">
-        <img src="/images/wine_bottle.jpg" alt="card-image" />
+      <div className="relative h-128 m-2.5 overflow-hidden text-white rounded-md">
+        <Image
+          src={"/images/wine_"+ bottleId + ".jpg"} 
+          alt="card-image" 
+          height={500}
+          width={230}
+          className="w-full h-96 object-cover"
+        />
       </div>
       <div className="p-4">
         <h6 className="mb-2 text-slate-800 text-xl font-semibold">

@@ -33,6 +33,7 @@ contract WineScript is Script {
         address chronicleOracleAddress_ETH_USD = 0xdd6D76262Fd7BdDe428dcfCd94386EbAe0151603;
 
         wine = new Wine(
+            brevisRequestAddress,
             pythEntropyAddress, 
             selfKisserAddress,
             chronicleOracleAddress_ETH_USD
