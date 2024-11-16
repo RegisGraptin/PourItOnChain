@@ -14,8 +14,7 @@ func TestCircuit(t *testing.T) {
 	app, err := sdk.NewBrevisApp(1, rpc, localDir)
 	check(err)
 
-	txHash := common.HexToHash(
-		"0x8a7fc50330533cd0adbf71e1cfb51b1b6bbe2170b4ce65c02678cf08c8b17737")
+	txHash := common.HexToHash("0x55acbfd8d3f02183b83ca872f84f502444a169648511df82a03897e6e4da7deb")
 
 	app.AddReceipt(sdk.ReceiptData{
 		TxHash: txHash,

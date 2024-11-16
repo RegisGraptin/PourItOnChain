@@ -19,7 +19,7 @@ func main() {
 		SetupDir: "$HOME/circuitOut",
 		SrsDir:   "$HOME/kzgsrs",
 		RpcURL:   "https://eth-sepolia.g.alchemy.com/v2/U394TAaOYhOkvflaFt09u8lU1X6WuImY",
-		ChainId:  1,
+		ChainId:  11155111,
 	})
 	if err != nil {
 		fmt.Println(err)

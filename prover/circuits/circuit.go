@@ -19,11 +19,12 @@ var _ sdk.AppCircuit = &AppCircuit{}
 // variables)
 
 // event BuyBottle (address indexed user, uint256 tokenId);
-// "buyBottle(uint256)": "b314fac2",
+// Obtain from the events list
+// https://sepolia.etherscan.io/address/0x5d577a3e774622f49f333499534be55a2cf5d4f6#events
 
-var EventBuyBottle = sdk.ParseEventID(hexutil.MustDecode("b314fac2")) // FIXME:
+var EventBuyBottle = sdk.ParseEventID(hexutil.MustDecode("0x822cd8cda2d2b3feb2339ab2e79a3b336b792f0a912867901e963e928afd3be8")) // FIXME:
 
-var WineAddr = sdk.ConstUint248("0xb2d2df7b916648F28157a15dEF984A04E1BE2E4A")
+var WineAddr = sdk.ConstUint248("0x5d577A3e774622f49f333499534be55a2Cf5d4F6")
 
 func (c *AppCircuit) Allocate() (maxReceipts, maxSlots, maxTransactions int) {
 	// Allocating regions for different source data. Here, we are allocating 5 data
@@ -58,7 +59,7 @@ func (c *AppCircuit) Define(api *sdk.CircuitAPI, in sdk.DataInput) error {
 	blockNums := sdk.Map(receipts, func(cur sdk.Receipt) sdk.Uint248 { return api.ToUint248(cur.BlockNum) })
 
 	existing := sdk.Map(receipts, func(cur sdk.Receipt) sdk.Uint248 {
-		return api.ToUint248(1)
+		return api.ToUint248(sdk.ConstUint64(1))
 	})
 
 	// Find out the minimum block number. This enables us to find out over what range

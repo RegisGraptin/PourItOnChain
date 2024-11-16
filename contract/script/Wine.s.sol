@@ -15,6 +15,9 @@ contract WineScript is Script {
 
         // address account = vm.addr(deployerPrivateKey);
 
+        // Get from https://docs.brevis.network/developer-resources/legacy-deployments
+        address brevisRequestAddress = 0x841ce48F9446C8E281D3F1444cB859b4A6D0738C;
+
         // Notice: on scroll pyth entropy does not exists
         // Same not in ethereum sepolia
         address pythEntropyAddress = 0x6CC14824Ea2918f5De5C2f75A9Da968ad4BD6344;
