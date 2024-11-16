@@ -58,21 +58,61 @@ app.get("/events", async (request, response) => {
           toBlock: currentBlock
       });
 
+      proofReq.setCustomInput({UserAddr: brevis.asUint248("0x39E9617bE6003897a04B6Eb1512e3b40A53E785A")});
+
       // console.log(rawLogs);
       for (let index = 0; index < rawLogs.length; index++) {
-        const element = rawLogs[index];
+        const element = rawLogs[index];  
         console.log(element);
-        proofReq.addReceipt(element);
+      
+        // Add the proof
+        proofReq.addReceipt(
+            new brevis.ReceiptData({
+                tx_hash: element.transactionHash,
+                fields: [
+                    new brevis.Field({
+                        log_pos: 0,
+                        is_topic: true,
+                        field_index: 0,
+                    }),
+                    new brevis.Field({
+                        log_pos: 0,
+                        is_topic: true,
+                        field_index: 1,
+                    }),
+                ],
+            }),
+            index,
+        );
+
       }
 
       
       const proofRes = await prover.prove(proofReq);
 
-      console.log(proofRes);
+      console.log('proof', proofRes.proof);
+
+      // console.log(proofRes);
 
       // FIXME:: Filtering ? Do I need to use an address to filter the proof generation ??
       // FIXME:: How the input works ? 
-      
+      try {
+        const brevisRes = await BrevisNetwork.submit(
+          proofReq, 
+          proofRes, 
+          11155111, 
+          11155111, 
+          0, 
+          "", 
+          ""  // contract 0x5314D73A0A122Ea9b7f4747cdC0a47eB998CC7DD
+        ); 
+
+        console.log('brevis res', brevisRes);
+
+        await BrevisNetwork.wait(brevisRes.queryKey, 11155111);
+    } catch (err) {
+        console.error(err);
+    }      
 
   } catch (error) {
       console.log(error);

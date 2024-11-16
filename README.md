@@ -84,3 +84,30 @@ confusing example ??
 
 
 amountToken => should be amount in usdc in the end
+
+
+
+## Brevis
+
+Regarding the on-chain behaviour analytics, we are using Brevis, by leveraging the ZK-coprocessor mechanism. Indeed, it can be costly to store and search on-chain data in a smart contract. Instead, we can do this computation off-chain, by watching the past event of a user through his address and generate a ZK-proof that we are going to use to prove that the user is a loyal and regular costumer.
+
+#### Walkthrough
+
+Some buy events we want to track (https://eth-sepolia.blockscout.com/tx/0x8a44a7c0da33a180320f2a45ebeaeca4beaab276ac4ac002bacc7533c3999e7b?tab=logs). We have defined a circuit in `prover/circuits/circuit.go` that track and count the number of buy event that happened on chain. To run this services for validate new ones, we can do:
+
+```bash
+cd prover
+make start
+```
+
+Then, to generate the proof for a given user, we have start working on the server that will managed all this process. You can find it in `brevis_verifier_node/` folder. There, we can simply run it with 
+
+```bash
+cd brevis_verifier_node
+npm start
+```
+
+Then, to build and verify a user behaviour, we can simply call `localhost:3010/events` where we will have a proof generated on the background.
+
+Unfortunatly, due to time issue, we could not integrate all the pipeline process. But we managed to generate a ZK Proof for the user.
+
