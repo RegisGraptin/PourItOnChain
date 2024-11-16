@@ -152,5 +152,7 @@ contract Wine is ERC721, IEntropyConsumer, OracleReader {
     }
 
 
+    // Accept eth payment
+    receive() external payable {}
 
 }

@@ -38,11 +38,11 @@ export default function CreateNewBottle(){
           abi: WineContract.abi,
           functionName: 'addBottle',
           args: [
-                  formData.get("name")?.toString(),
-                  formData.get("description")?.toString(),
-                  formData.get("year"),
-                  formData.get("price")
-              ],
+            formData.get("name")?.toString(),
+            formData.get("description")?.toString(),
+            formData.get("year"),
+            formData.get("price")
+          ],
         })
 
     }
