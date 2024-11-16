@@ -4,6 +4,10 @@ code deploy: 0xaE5Dd577835069e6686963C4d36acb7CFe87De04.
 scroll sepolia
 
 
+contract 0xb2d2df7b916648F28157a15dEF984A04E1BE2E4A.
+sepolia network
+
+
 auto blockscout deployed at: https://scroll.cloud.blockscout.com/
 
 
