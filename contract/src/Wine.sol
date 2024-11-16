@@ -90,7 +90,7 @@ contract Wine is ERC721, IEntropyConsumer, OracleReader {
         uint256 amountUSDToken = amountUSD / 10 ** 18; // Divide again for the wei conversion
         
         // Check the USD price matching
-        require(amountUSDToken > bottleData[tokenId].priceUSD, "Not enough wei from usdc conversion");
+        require(amountUSDToken >= bottleData[tokenId].priceUSD, "Not enough wei from usdc conversion");
 
         // FIXME: check the amount of eth based on chronicle oracle
         (bool sent, bytes memory _data) = address(this).call{value: msg.value}("");
