@@ -1,6 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
-import Card from "../components/Card"
+
 import ShowcaseWine from '../components/ShowcaseWine';
 
 const Home: NextPage = () => {
@@ -10,11 +10,16 @@ const Home: NextPage = () => {
       <ConnectButton />
       </header>
 
+
+      <div className='flex justify-center mt-5 text-3xl font-bold'>
+        <h1>
+          Wine-Marketplace🍷
+        </h1>
+      </div>
+
       <ShowcaseWine />
 
-      <div className='flex justify-center mt-5 text-3xl font-bold'>Wine-Marketplace🍷
-      </div>
-      <div className='flex justify-center'><Card /></div>
+      {/* <div className='flex justify-center'><Card /></div> */}
     </div>
   );
 };
