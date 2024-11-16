@@ -1,5 +1,5 @@
 import { Address } from "viem"
-import { useReadContract, useReadContracts } from "wagmi"
+import { useReadContract, useReadContracts, useWriteContract } from "wagmi"
 
 import WineContract from "../abi/Wine.json";
 
@@ -13,6 +13,32 @@ export default function WineCard({bottleId, bottleDetail}) {
       args: [bottleId],
   })
 
+  const { data: ethPrice, isLoading: ethPriceLoading } = useReadContract({
+      address: process.env.NEXT_PUBLIC_CONTRACT as Address,
+      abi: WineContract.abi,
+      functionName: 'readUSDPriceFromETH',
+      args: [],
+  })
+
+  console.log(ethPrice)
+  
+  // const {data: hash, error, isPending, writeContract} = useWriteContract()
+
+  // const buyAction = () => {
+  //   writeContract({
+  //     address: process.env.NEXT_PUBLIC_SEI_CONTRACT as Address,
+  //     abi: AcknowledgeReceipt.abi,
+  //     functionName: 'createReceipt',
+  //     args: [
+  //       formData.get("recipient")?.toString(),
+  //       upload["cid"],
+  //       payloadHash,
+  //       routing_contract,
+  //       _info,
+  //     ],
+  //     value: BigInt(amountOfGas),
+  //   })
+  // }
 
 
   return (
@@ -29,9 +55,14 @@ export default function WineCard({bottleId, bottleDetail}) {
         </p>
       </div>
       <div className="px-4 pb-4 pt-0 mt-2">
+        <div className="rounded-md bg-slate-800 items-center py-2 px-4 border border-transparent text-center text-sm transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+          test
+        </div>
+
         <button className="rounded-md bg-slate-800 items-center py-2 px-4 border border-transparent text-center text-sm transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button">
           {isForSell && "Buy a bottle"}
           {!isForSell && "No stocks"}
+          {ethPrice}
         </button>
       </div>
     </div> 

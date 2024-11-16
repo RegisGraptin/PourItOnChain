@@ -19,7 +19,7 @@ abstract contract OracleReader {
         selfKisser.selfKiss(address(chronicle));
     }
 
-    function readUSDPriceFromETH() internal view returns (uint256 val) {
+    function readUSDPriceFromETH() public view returns (uint256 val) {
         val = chronicle.read();
     }
 
