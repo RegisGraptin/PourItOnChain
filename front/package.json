@@ -8,10 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@circle-fin/user-controlled-wallets": "^5.0.0",
     "@circle-fin/w3s-pw-web-sdk": "^1.1.6",
     "@material-tailwind/react": "^2.1.10",
     "@rainbow-me/rainbowkit": "^2.2.0",
     "@tanstack/react-query": "^5.55.3",
+    "axios": "^1.7.7",
+    "crypto": "^1.0.1",
     "next": "^14.2.10",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
