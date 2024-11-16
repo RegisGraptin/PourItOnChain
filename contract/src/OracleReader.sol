@@ -1,5 +1,5 @@
 
-import { ISelfKisser, IChronicle } from "./interface/OracleReader.sol";
+import { ISelfKisser, IChronicle } from "./interface/ChronicleOracleInterface.sol";
 
 abstract contract OracleReader {
 
@@ -19,7 +19,7 @@ abstract contract OracleReader {
         selfKisser.selfKiss(address(chronicle));
     }
 
-    function readUSDPriceFromETH() internal view returns (uint256 val) {
+    function readUSDPriceFromETH() public view returns (uint256 val) {
         val = chronicle.read();
     }
 

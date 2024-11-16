@@ -13,22 +13,30 @@ contract WineScript is Script {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);
 
-        address account = vm.addr(deployerPrivateKey);
+        // address account = vm.addr(deployerPrivateKey);
+
+        // Get from https://docs.brevis.network/developer-resources/legacy-deployments
+        address brevisRequestAddress = 0x841ce48F9446C8E281D3F1444cB859b4A6D0738C;
 
         // Notice: on scroll pyth entropy does not exists
+        // Same not in ethereum sepolia
         address pythEntropyAddress = 0x6CC14824Ea2918f5De5C2f75A9Da968ad4BD6344;
 
 
         // Chronicle Oracle data
         // https://docs.chroniclelabs.org/Developers/testnet
+        // address selfKisserAddress = 0x0Dcc19657007713483A5cA76e6A7bbe5f56EA37d;
+        // address chronicleOracleAddress_ETH_USD = 0xc8A1F9461115EF3C1E84Da6515A88Ea49CA97660;
+
+
         address selfKisserAddress = 0x0Dcc19657007713483A5cA76e6A7bbe5f56EA37d;
-        address chronicleOracleAddress_ETH_USD = 0xc8A1F9461115EF3C1E84Da6515A88Ea49CA97660;
+        address chronicleOracleAddress_ETH_USD = 0xdd6D76262Fd7BdDe428dcfCd94386EbAe0151603;
 
         wine = new Wine(
             pythEntropyAddress, 
             selfKisserAddress,
             chronicleOracleAddress_ETH_USD
-        );
+        );// eth-rpc
 
         vm.stopBroadcast();
     }

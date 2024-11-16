@@ -1,6 +1,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
-import Card from "../components/card"
+
+import ShowcaseWine from '../components/ShowcaseWine';
 import { useState } from "react";
 import { getCircleSdk } from "../utils/circleSdk";
 
@@ -24,13 +25,14 @@ const Home: NextPage = () => {
       <header className='flex justify-end px-5 py-2 border-b border-slate-200'>
       <ConnectButton />
       </header>
-      <div className='flex justify-center mt-5 text-3xl font-bold'>Wine-Marketplace🍷
+
+
+      <div className='flex justify-center mt-5 text-3xl font-bold'>
+        <h1>
+          Wine-Marketplace🍷
+        </h1>
       </div>
-      <div className='flex justify-center'><Card /></div>
-      <div>
-      <h1>Circle Wallet</h1>
-      <button onClick={createWallet}>Create Wallet</button>
-    </div>
+      <div className='flex justify-center'><ShowcaseWine /></div>
     </div>
     
   );
