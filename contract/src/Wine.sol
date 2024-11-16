@@ -91,7 +91,7 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
             alreadyBuy[msg.sender] = true;
         }
 
-        // Get the price of the bottle
+        // Get the price of the bottle based on Chronicle Oracle
         uint256 ethPrice = readUSDPriceFromETH();
         uint256 amountUSD = (msg.value * ethPrice) / 10 ** 18; // Price is 10**18
         uint256 amountUSDToken = amountUSD / 10 ** 18; // Divide again for the wei conversion
@@ -99,7 +99,7 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         // Check the USD price matching
         require(amountUSDToken >= bottleData[tokenId].priceUSD, "Not enough wei from usdc conversion");
 
-        // FIXME: check the amount of eth based on chronicle oracle
+        // Pay in eth the bottle
         (bool sent, bytes memory _data) = address(this).call{value: msg.value}("");
         require(sent, "Failed to send Ether");
 
@@ -114,6 +114,8 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         uint256 priceUSD,
         uint256 dateEndContest
     ) public returns (uint256) {
+        // FIXME: No check on the data for demo purpose!
+
         uint256 tokenId = addBottle(name, description, year, priceUSD);
         // This one is not for sell
         forSell[tokenId] = false;
