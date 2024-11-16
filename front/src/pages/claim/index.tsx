@@ -1,13 +1,19 @@
+import { ConnectButton } from "@rainbow-me/rainbowkit"
+import { FormEvent } from "react"
 import { Address } from "viem"
-import { useReadContract, useReadContracts } from "wagmi"
+import { BaseError, useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 
-import WineContract from "../abi/Wine.json";
 
-import WineCard from "./WineCard"
+import WineContract from "../../abi/Wine.json";
+import Header from "../../components/Header";
+import WineCard from "../../components/WineCard";
 
-export default function ShowCaseWine () {
 
-    const { data: lastBottleId, isLoading: lastBottleIdLoading } = useReadContract({
+
+export default function ClaimPage(){
+    
+
+      const { data: lastBottleId, isLoading: lastBottleIdLoading } = useReadContract({
         address: process.env.NEXT_PUBLIC_CONTRACT as Address,
         abi: WineContract.abi,
         functionName: 'nextTokenId',
@@ -25,11 +31,19 @@ export default function ShowCaseWine () {
         ),
     });
 
+    async function onSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
+
+    }
 
     return <>
-        <section className="bg-white pt-40">
+
+        <Header />
+        
+         <section className="bg-white pt-40">
             <div className="flex flex-wrap p-4 justify-center">
                 {bottlesData && bottlesData.map(function (bottleData, i) {
+                    
                     return <WineCard key={i} bottleId={i} bottleDetail={bottleData.result} />
                 })}
             </div>

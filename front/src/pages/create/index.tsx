@@ -5,6 +5,7 @@ import { BaseError, useWaitForTransactionReceipt, useWriteContract } from "wagmi
 
 
 import WineContract from "../../abi/Wine.json";
+import Header from "../../components/Header";
 
 export default function CreateNewBottle(){
     
@@ -49,7 +50,7 @@ export default function CreateNewBottle(){
 
     return <>
 
-        <ConnectButton />
+        <Header />
         <form onSubmit={onSubmit}>
         <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
           <div className="container max-w-screen-lg mx-auto">

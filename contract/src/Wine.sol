@@ -7,6 +7,7 @@ import { IEntropy } from "@pythnetwork/entropy-sdk-solidity/IEntropy.sol";
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 import { OracleReader } from "./OracleReader.sol";
+import { BrevisApp } from "./BrevisApp.sol";
 
 contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
     
@@ -38,7 +39,7 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
     event BuyBottle (address indexed, uint256);
     event ContestWinner (address indexed, uint256 indexed);
     /// ZK-proof event of user submitting a proof of fidelity customer
-    event ConsumerAttested(uint64 blockNum, address account, uint256 volume);
+    event ConsumerAttested(uint64 blockNum, address account, uint256 count);
     
     bytes32 public vkHash;
 
@@ -49,6 +50,9 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         address chronicleOracleAddress_ETH_USD
     ) ERC721("WineBottle", "WBTL") BrevisApp(brevisRequestAddress) OracleReader(selfKisserAddress, chronicleOracleAddress_ETH_USD) {
         entropy = IEntropy(entropyAddress);
+
+        // Compile from brevis - reward from 2 buy
+        vkHash = 0x1d3553d0192bfc1f5df1f574d8dcd6cd45cc5cdd21a06942eadcba5d84d74c2f;
     }
 
     function getEntropy() internal view override returns (address) {
@@ -63,7 +67,7 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         uint256 priceUSD
     ) public returns (uint256) {
         uint256 tokenId = nextTokenId++;
-        _mint(msg.sender, tokenId);
+        _mint(address(this), tokenId);
 
         // Create the associated metadata
         bottleData[tokenId] = BottleMetaData({
@@ -98,6 +102,9 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         
         // Check the USD price matching
         require(amountUSDToken >= bottleData[tokenId].priceUSD, "Not enough wei from usdc conversion");
+
+        // transfer token
+        _transfer(address(this), msg.sender, tokenId);
 
         // Pay in eth the bottle
         (bool sent, bytes memory _data) = address(this).call{value: msg.value}("");
@@ -156,6 +163,8 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         // Transfer the nft to the corresponsing user
         _transfer(address(this), listOfUserAddresses[randomIndex], tokenId);
 
+        contestTimeStamp[tokenId] = 0;
+
         // Emit event
         emit ContestWinner(listOfUserAddresses[randomIndex], tokenId);
     }
@@ -184,7 +193,7 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
             priceUSD: 0
         });
 
-        emit TransferAmountAttested(blockNum, accountAddr, volume);
+        emit ConsumerAttested(blockNum, accountAddr, count);
     }
 
     function decodeOutput(bytes calldata o) internal pure returns (address, uint64, uint256) {
