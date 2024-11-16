@@ -27,17 +27,12 @@ export default function ShowCaseWine () {
 
 
     return <>
-        <h2>Get last bottle - {Number(lastBottleId)}</h2>
-        
         <section className="bg-white pt-40">
             <div className="flex flex-wrap p-4 justify-center">
-
-
-            {bottlesData && bottlesData.map(function (bottleData, i) {
-                return <WineCard key={i} bottleId={i} bottleDetail={bottleData.result} />
-            })}
-
-        </div>
+                {bottlesData && bottlesData.map(function (bottleData, i) {
+                    return <WineCard key={i} bottleId={i} bottleDetail={bottleData.result} />
+                })}
+            </div>
         </section>
 
     </>

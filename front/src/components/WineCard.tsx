@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 import { Address, formatEther, parseEther } from "viem"
 import { useReadContract, useReadContracts, useWaitForTransactionReceipt, useWriteContract } from "wagmi"
 
@@ -64,6 +66,19 @@ export default function WineCard({bottleId, bottleDetail}) {
     });
   }
 
+  const endContestAction = () => {
+
+    // Generate a random value locally
+    let randomNumber = crypto.randomBytes(32).toString("hex");
+
+    writeContract({
+      address: process.env.NEXT_PUBLIC_CONTRACT as Address,
+      abi: WineContract.abi,
+      functionName: 'endContest',
+      args: [bottleId, "0x" + randomNumber]
+    });
+  }
+
 
 
   return (
@@ -105,6 +120,13 @@ export default function WineCard({bottleId, bottleDetail}) {
           <>
             <button disabled className="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" type="button">
               For contest
+            </button>
+            <button 
+              className="rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none ml-2" 
+              type="button"
+              onClick={endContestAction}
+            >
+              End contest - demo
             </button>
           </>
         )}

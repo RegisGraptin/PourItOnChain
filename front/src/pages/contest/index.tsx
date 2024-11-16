@@ -5,6 +5,7 @@ import { BaseError, useWaitForTransactionReceipt, useWriteContract } from "wagmi
 
 
 import WineContract from "../../abi/Wine.json";
+import Header from "../../components/Header";
 
 export default function CreateContest(){
     
@@ -23,7 +24,8 @@ export default function CreateContest(){
 
         console.log(formData)
         const endContest = new Date(formData.get("endContest"));
-        const endFormatted = endContest.getTime();
+        const endFormatted = Math.floor(endContest.getTime() / 1000);
+        console.log(endFormatted) // Need to remove 1000 => expressed in ms instead of sec on blockchain
         
         // Write to smart contract
         writeContract({
@@ -43,7 +45,8 @@ export default function CreateContest(){
 
     return <>
 
-        <ConnectButton />
+        <Header />
+        
         <form onSubmit={onSubmit}>
         <div className="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
           <div className="container max-w-screen-lg mx-auto">
