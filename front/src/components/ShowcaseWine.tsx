@@ -5,8 +5,6 @@ import WineContract from "../abi/Wine.json";
 
 import WineCard from "./WineCard"
 
-
-
 export default function ShowCaseWine () {
 
     const { data: lastBottleId, isLoading: lastBottleIdLoading } = useReadContract({
