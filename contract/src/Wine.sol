@@ -67,7 +67,7 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         uint256 priceUSD
     ) public returns (uint256) {
         uint256 tokenId = nextTokenId++;
-        _mint(msg.sender, tokenId);
+        _mint(address(this), tokenId);
 
         // Create the associated metadata
         bottleData[tokenId] = BottleMetaData({
@@ -102,6 +102,9 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         
         // Check the USD price matching
         require(amountUSDToken >= bottleData[tokenId].priceUSD, "Not enough wei from usdc conversion");
+
+        // transfer token
+        _transfer(address(this), msg.sender, tokenId);
 
         // Pay in eth the bottle
         (bool sent, bytes memory _data) = address(this).call{value: msg.value}("");
@@ -159,6 +162,8 @@ contract Wine is ERC721, BrevisApp, IEntropyConsumer, OracleReader {
         
         // Transfer the nft to the corresponsing user
         _transfer(address(this), listOfUserAddresses[randomIndex], tokenId);
+
+        contestTimeStamp[tokenId] = 0;
 
         // Emit event
         emit ContestWinner(listOfUserAddresses[randomIndex], tokenId);
